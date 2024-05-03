@@ -1,0 +1,14 @@
+{
+  "name": "interview",
+  "version": "1.0.0",
+  "description": "",
+  "main": "MyPromise.js",
+  "scripts": {
+    "test": "promises-aplus-tests ./src/MyPromise.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "promises-aplus-tests": "^2.1.2"
+  }
+}
