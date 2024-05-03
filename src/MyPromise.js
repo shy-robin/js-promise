@@ -357,6 +357,29 @@ class MyPromise {
       }
     });
   }
+
+  /**
+   *
+   */
+  static any(promises) {
+    return new MyPromise((resolve, reject) => {
+      const result = [];
+      let times = 0;
+      for (let i = 0; i < promises.length; i++) {
+        const p = promises[i];
+        if (p && typeof p.then === "function") {
+          p.then(resolve, (reason) => {
+            result[i] = reason;
+            if (++times === promises.length) {
+              reject(new AggregateError(result, "All promises were rejected"));
+            }
+          });
+        } else {
+          resolve(p);
+        }
+      }
+    });
+  }
 }
 
 // promises-aplus-tests

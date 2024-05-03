@@ -192,32 +192,58 @@ const MyPromise = require("./MyPromise");
 //   }
 // );
 
+// const p1 = new MyPromise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve({
+//       data: "aaaaa",
+//     });
+//   }, 1000);
+// });
+// const p2 = new MyPromise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve({
+//       data: "bbbbb",
+//     });
+//   }, 2000);
+// });
+// const p3 = new MyPromise((resolve, reject) => {
+//   setTimeout(() => {
+//     reject("404");
+//   }, 1500);
+// });
+// const p4 = "1111";
+//
+// MyPromise.allSettled([p1, p2, p3, p4]).then(
+//   (value) => {
+//     console.log("value", value);
+//   },
+//   (reason) => {
+//     console("reason", reason);
+//   }
+// );
+
 const p1 = new MyPromise((resolve, reject) => {
   setTimeout(() => {
-    resolve({
-      data: "aaaaa",
-    });
-  }, 1000);
+    resolve(11);
+  }, 100);
+});
+const p11 = new MyPromise((resolve, reject) => {
+  setTimeout(() => {
+    reject(44);
+  }, 10);
 });
 const p2 = new MyPromise((resolve, reject) => {
   setTimeout(() => {
-    resolve({
-      data: "bbbbb",
-    });
-  }, 2000);
+    reject(22);
+  }, 50);
 });
-const p3 = new MyPromise((resolve, reject) => {
-  setTimeout(() => {
-    reject("404");
-  }, 1500);
-});
-const p4 = "1111";
+const p3 = 33;
 
-MyPromise.allSettled([p1, p2, p3, p4]).then(
-  (value) => {
-    console.log("value", value);
+MyPromise.any([p1, p11, p2]).then(
+  (val) => {
+    console.log(val);
   },
   (reason) => {
-    console("reason", reason);
+    console.log(reason.message);
   }
 );
