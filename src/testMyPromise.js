@@ -126,3 +126,19 @@ const MyPromise = require("./MyPromise");
 // MyPromise.reject("failed").catch((err) => {
 //   console.log(err);
 // });
+
+// new MyPromise((resolve) => {
+//   resolve(11);
+// })
+//   .then()
+//   .finally(() => {
+//     console.log("finally");
+//     return new MyPromise((resolve) => {
+//       setTimeout(() => {
+//         resolve(22);
+//       }, 1000);
+//     });
+//   })
+//   .then((res) => {
+//     console.log("end", res);
+//   });

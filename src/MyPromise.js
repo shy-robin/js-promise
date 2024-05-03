@@ -230,6 +230,26 @@ class MyPromise {
     return this.then(null, onRejected);
   }
 
+  /**
+   * 无论成功或失败都会调用，无法获取到成功的 value 和失败的 reason
+   * 返回一个 promise 对象，透传上一次的 value 或 reason
+   */
+  finally(fn) {
+    // 收集成功和失败回调
+    return this.then(
+      (value) => {
+        // 执行 fn 并透传上一次的成功 value
+        return MyPromise.resolve(fn()).then(() => value);
+      },
+      (reason) => {
+        // 执行 fn 并透传上一次的失败 reason
+        return MyPromise.resolve(fn()).then(() => {
+          throw reason;
+        });
+      }
+    );
+  }
+
   static resolve(value) {
     return new MyPromise((resolve) => {
       resolve(value);
