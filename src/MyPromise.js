@@ -301,6 +301,24 @@ class MyPromise {
       }
     });
   }
+
+  /**
+   * 传入一个 promises 数组
+   * 当其中一个 promise 首先转变状态时，返回其结果（无论成功或失败）
+   * 当元素不是 promise 时，直接返回该元素
+   */
+  static race(promises) {
+    return new MyPromise((resolve, reject) => {
+      for (let i = 0; i < promises.length; i++) {
+        const p = promises[i];
+        if (p && typeof p.then === "function") {
+          p.then(resolve, reject);
+        } else {
+          resolve(p);
+        }
+      }
+    });
+  }
 }
 
 // promises-aplus-tests

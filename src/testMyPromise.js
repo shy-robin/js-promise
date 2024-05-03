@@ -169,3 +169,25 @@ const MyPromise = require("./MyPromise");
 //     console.log("reason", reason);
 //   }
 // );
+
+const p1 = new MyPromise((resolve) => {
+  setTimeout(() => {
+    resolve(11);
+  }, 5);
+});
+const p2 = new MyPromise((resolve, reject) => {
+  setTimeout(() => {
+    reject(22);
+  }, 10);
+});
+const p3 = 33;
+const p4 = 44;
+
+MyPromise.race([p1, p2, p4, p3]).then(
+  (res) => {
+    console.log("succeed", res);
+  },
+  (reason) => {
+    console.log("failed", reason);
+  }
+);
