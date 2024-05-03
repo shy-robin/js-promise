@@ -319,6 +319,44 @@ class MyPromise {
       }
     });
   }
+
+  /**
+   * 传入一个 promises 数组
+   * 只有等到参数数组的所有 promise 对象都发生状态变更（不管是fulfilled还是rejected），返回的 Promise 对象才会发生状态变更。
+   */
+  static allSettled(promises) {
+    return new MyPromise((resolve, reject) => {
+      const result = [];
+      let times = 0;
+
+      const processComplete = (data, index, status) => {
+        result[index] = {
+          status,
+          ...data,
+        };
+
+        if (++times === promises.length) {
+          resolve(result);
+        }
+      };
+
+      for (let i = 0; i < promises.length; i++) {
+        const p = promises[i];
+        if (p && typeof p.then === "function") {
+          p.then(
+            (value) => {
+              processComplete({ value }, i, MyPromise.FULFILLED);
+            },
+            (reason) => {
+              processComplete({ reason }, i, MyPromise.REJECTED);
+            }
+          );
+        } else {
+          processComplete({ value: p }, i, MyPromise.FULFILLED);
+        }
+      }
+    });
+  }
 }
 
 // promises-aplus-tests

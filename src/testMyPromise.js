@@ -170,24 +170,54 @@ const MyPromise = require("./MyPromise");
 //   }
 // );
 
-const p1 = new MyPromise((resolve) => {
+// const p1 = new MyPromise((resolve) => {
+//   setTimeout(() => {
+//     resolve(11);
+//   }, 5);
+// });
+// const p2 = new MyPromise((resolve, reject) => {
+//   setTimeout(() => {
+//     reject(22);
+//   }, 10);
+// });
+// const p3 = 33;
+// const p4 = 44;
+//
+// MyPromise.race([p1, p2, p4, p3]).then(
+//   (res) => {
+//     console.log("succeed", res);
+//   },
+//   (reason) => {
+//     console.log("failed", reason);
+//   }
+// );
+
+const p1 = new MyPromise((resolve, reject) => {
   setTimeout(() => {
-    resolve(11);
-  }, 5);
+    resolve({
+      data: "aaaaa",
+    });
+  }, 1000);
 });
 const p2 = new MyPromise((resolve, reject) => {
   setTimeout(() => {
-    reject(22);
-  }, 10);
+    resolve({
+      data: "bbbbb",
+    });
+  }, 2000);
 });
-const p3 = 33;
-const p4 = 44;
+const p3 = new MyPromise((resolve, reject) => {
+  setTimeout(() => {
+    reject("404");
+  }, 1500);
+});
+const p4 = "1111";
 
-MyPromise.race([p1, p2, p4, p3]).then(
-  (res) => {
-    console.log("succeed", res);
+MyPromise.allSettled([p1, p2, p3, p4]).then(
+  (value) => {
+    console.log("value", value);
   },
   (reason) => {
-    console.log("failed", reason);
+    console("reason", reason);
   }
 );
