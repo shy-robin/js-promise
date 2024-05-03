@@ -142,3 +142,30 @@ const MyPromise = require("./MyPromise");
 //   .then((res) => {
 //     console.log("end", res);
 //   });
+
+// const p1 = new MyPromise((resolve) => {
+//   setTimeout(() => {
+//     resolve(11);
+//   }, 1000);
+// });
+//
+// const p2 = new MyPromise((resolve, reject) => {
+//   setTimeout(() => {
+//     reject(22);
+//   }, 2000);
+// });
+//
+// const p3 = new MyPromise((resolve, reject) => {
+//   setTimeout(() => {
+//     reject(33);
+//   }, 3000);
+// });
+//
+// MyPromise.all([p1, p2, p3]).then(
+//   (res) => {
+//     console.log(res);
+//   },
+//   (reason) => {
+//     console.log("reason", reason);
+//   }
+// );

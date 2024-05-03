@@ -261,6 +261,46 @@ class MyPromise {
       reject(reason);
     });
   }
+
+  /**
+   * 将多个 promise 放在一个数组中，
+   * 当整个数组的全部 promise 成功时才会返回成功（返回的是所有成功结果的数组），
+   * 当数组中的 promise 有一个出现失败时就返回失败 (失败的原因是第一个失败promise的结果)。
+   * 返回的是一个promise
+   */
+  static all(promises) {
+    return new MyPromise((resolve, reject) => {
+      const result = [];
+      let times = 0;
+
+      const processSuccess = (value, index) => {
+        result[index] = value;
+
+        // 全部执行成功后，返回数组
+        if (++times === promises.length) {
+          resolve(result);
+        }
+      };
+
+      for (let i = 0; i < promises.length; i++) {
+        const p = promises[i];
+        if (p && typeof p.then === "function") {
+          // 如果是 promises，则收集回调，成功则存入数组，失败则直接 reject
+          p.then(
+            (res) => {
+              processSuccess(res, i);
+            },
+            (reason) => {
+              reject(reason);
+            }
+          );
+        } else {
+          // 如果不是 promise，则直接存入数组
+          processSuccess(p, i);
+        }
+      }
+    });
+  }
 }
 
 // promises-aplus-tests
