@@ -225,6 +225,18 @@ class MyPromise {
 
     return promise2;
   }
+
+  static resolve(value) {
+    return new MyPromise((resolve) => {
+      resolve(value);
+    });
+  }
+
+  static reject(reason) {
+    return new Promise((_resolve, reject) => {
+      reject(reason);
+    });
+  }
 }
 
 // promises-aplus-tests
