@@ -92,24 +92,37 @@ const MyPromise = require("./MyPromise");
 //   .then((res) => console.log(res));
 
 // called 作用
-const thenable1 = {
-  then(onFulfilled) {
-    setTimeout(() => {
-      onFulfilled(1);
-    }, 0);
-  },
-};
-const thenable2 = {
-  then(onFulfilled) {
-    onFulfilled(thenable1);
-    onFulfilled(2);
-  },
-};
+// const thenable1 = {
+//   then(onFulfilled) {
+//     setTimeout(() => {
+//       onFulfilled(1);
+//     }, 0);
+//   },
+// };
+// const thenable2 = {
+//   then(onFulfilled) {
+//     onFulfilled(thenable1);
+//     onFulfilled(2);
+//   },
+// };
+//
+// new MyPromise((resolve, reject) => {
+//   resolve();
+// })
+//   .then((res) => {
+//     return thenable2;
+//   })
+//   .then((res) => console.log(res));
 
-new MyPromise((resolve, reject) => {
-  resolve();
-})
-  .then((res) => {
-    return thenable2;
-  })
-  .then((res) => console.log(res));
+// MyPromise.reject("failed").then(
+//   (res) => {
+//     console.log(res);
+//   },
+//   (reason) => {
+//     console.log(reason);
+//   }
+// );
+
+// MyPromise.reject("failed").catch((err) => {
+//   console.log(err);
+// });

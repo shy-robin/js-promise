@@ -226,6 +226,10 @@ class MyPromise {
     return promise2;
   }
 
+  catch(onRejected) {
+    return this.then(null, onRejected);
+  }
+
   static resolve(value) {
     return new MyPromise((resolve) => {
       resolve(value);
