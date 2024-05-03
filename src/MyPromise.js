@@ -161,7 +161,7 @@ class MyPromise {
           this.#resolveCallbacks.push(() => {
             // 这里使用 setTimeout 是因为在 promise2 初始化之前调用了 promise2，
             // 为了防止报错，用 setTimeout 异步执行这段代码
-            setTimeout(() => {
+            queueMicrotask(() => {
               try {
                 const x = onFulfilled(this.#value);
                 resolvePromise(x, promise2, resolve, reject);
@@ -173,7 +173,7 @@ class MyPromise {
           this.#rejectCallbacks.push(() => {
             // 这里使用 setTimeout 是因为在 promise2 初始化之前调用了 promise2，
             // 为了防止报错，用 setTimeout 异步执行这段代码
-            setTimeout(() => {
+            queueMicrotask(() => {
               try {
                 const x = onRejected(this.#reason);
                 resolvePromise(x, promise2, resolve, reject);
@@ -188,7 +188,7 @@ class MyPromise {
         case MyPromise.FULFILLED:
           // 这里使用 setTimeout 是因为在 promise2 初始化之前调用了 promise2，
           // 为了防止报错，用 setTimeout 异步执行这段代码
-          setTimeout(() => {
+          queueMicrotask(() => {
             try {
               // 成功回调会有返回值，有以下情况：
               // 1. 无返回hi在
@@ -205,7 +205,7 @@ class MyPromise {
         case MyPromise.REJECTED:
           // 这里使用 setTimeout 是因为在 promise2 初始化之前调用了 promise2，
           // 为了防止报错，用 setTimeout 异步执行这段代码
-          setTimeout(() => {
+          queueMicrotask(() => {
             try {
               const x = onRejected(this.#reason);
               resolvePromise(x, promise2, resolve, reject);
