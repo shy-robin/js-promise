@@ -38,6 +38,10 @@ class MyPromise {
      * 【发布通知】调用 resolve 后立即将 promise 转为成功态并记录传递的 value
      */
     const resolve = (value) => {
+      // Promises/A+ 并没有规定 resolve(promise)，这里是为了和 ES6 保持表现一致
+      if (value instanceof MyPromise) {
+        return value.then(resolve, reject);
+      }
       if (this.#status === MyPromise.PENDING) {
         this.#status = MyPromise.FULFILLED;
         this.#value = value;
